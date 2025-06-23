@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Git-GitHub Connection Guide</title>
+  <style>
+  body{ 
+  background-color:gray; 
+  </style>
+</head>
+<body>
+  <!-- My First Git connection to git hub just satisfacion -->
+  <h1>Hello Git and GitHub 🤝</h1>
+  <p>Steps i take for the succesfull connection</p>
+  <h2>ssh key part</h2>
+  <ol>
+    <li>Created ssh key
+      <ul>
+        <li>ssh-keygen -type(-t) ed25519 -f (like foder location)
+        ~/.ssh/id_ed25519_git-nath-2)</li>
+      </ul>
+    </li>
+    <li>💻 Display public ssh key .pub
+      <ul>
+        <li><code>cat ~/.ssh/id_ed25519_git-nath-2.pub</code></li>
+      </ul>
+    </li>
+    <li>©️copy and paste to github ssh key</li>
+    <li>see The host name
+      <ul>
+        <li><code>cat ~/.ssh/config</code></li>
+        <pre><code> Host git-nath-2-key HostName github.com User git IdentityFile 
+~/.ssh/id_ed25519_git-nath-2 IdentitiesOnly yes</code></pre>
+      </ul>
+    </li>
+    <li>Add remote connection
+      <ul>
+        <li><code>git remote add origin
+        git@Hostname:username/repository.git</code></li>
+      </ul>
+      <ul>
+        <li>if there wes a connection stablished remove it</li>
+      </ul>
+      <ul>
+        <ul>
+          <li><code>git remote remove origin</code></li>
+        </ul>
+      </ul>
+    </li>
+    <li>Before push pull the repo
+      <ul>
+        <li><code>git pull origin main</code></li>
+      </ul>
+    </li>
+    <li>set up default stream
+      <ul>
+        <li><code>git push -u origin main</code></li>
+      </ul>
+    </li>
+  </ol>
+  <p>This is the connection to the github</p>
+  <footer>
+    © nath all rights reserved.
+  </footer>
+</body>
+</html>
