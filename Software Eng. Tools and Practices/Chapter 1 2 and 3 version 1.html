@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SE Tools & Practices - Exam Prep</title>
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #1a202c;
+        --sidebar-bg: #f7fafc;
+        --sidebar-border: #e2e8f0;
+        --accent-color: #3182ce;
+        --accent-hover: #2c5282;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --code-bg: #edf2f7;
+        --header-bg: #ffffff;
+        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #1a202c;
+        --text-color: #e2e8f0;
+        --sidebar-bg: #2d3748;
+        --sidebar-border: #4a5568;
+        --accent-color: #63b3ed;
+        --accent-hover: #4299e1;
+        --card-bg: #2d3748;
+        --card-border: #4a5568;
+        --code-bg: #171923;
+        --header-bg: #1a202c;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        transition: background-color 0.3s, color 0.3s;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Navigation */
+      .sidebar {
+        width: 280px;
+        background-color: var(--sidebar-bg);
+        border-right: 1px solid var(--sidebar-border);
+        height: 100vh;
+        position: fixed;
+        overflow-y: auto;
+        padding: 2rem 1rem;
+        transition: background-color 0.3s, border-color 0.3s;
+        z-index: 100;
+      }
+
+      .sidebar h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-color);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .nav-links {
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--text-color);
+        text-decoration: none;
+        border-radius: 0.375rem;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(66, 153, 225, 0.1);
+        color: var(--accent-color);
+        transform: translateX(5px);
+      }
+
+      .theme-toggle {
+        margin-top: 2rem;
+        padding: 0.75rem;
+        width: 100%;
+        background-color: var(--card-border);
+        color: var(--text-color);
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: opacity 0.2s;
+      }
+
+      .theme-toggle:hover {
+        opacity: 0.9;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: 280px;
+        padding: 3rem 4rem;
+        max-width: 1200px;
+      }
+
+      /* Typography & Content Styling */
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--sidebar-border);
+        line-height: 1.2;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-color);
+      }
+
+      h3 {
+        font-size: 1.4rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--text-color);
+        opacity: 0.8;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        font-size: 1.05rem;
+      }
+
+      ul,
+      ol {
+        margin-bottom: 1.5rem;
+        margin-left: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      strong {
+        color: var(--accent-color);
+      }
+
+      /* Diagrams & Tables Representations */
+      .diagram-box {
+        background-color: var(--code-bg);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        font-family: "Courier New", Courier, monospace;
+        white-space: pre-wrap;
+        border: 1px solid var(--card-border);
+        margin: 1.5rem 0;
+        font-size: 0.9rem;
+        overflow-x: auto;
+      }
+
+      .diagram-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+        color: var(--accent-color);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        background-color: var(--card-bg);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      th {
+        background-color: var(--sidebar-bg);
+        font-weight: 600;
+      }
+
+      /* QA Section */
+      .qa-section {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 4px solid var(--sidebar-border);
+      }
+
+      .qa-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow);
+      }
+
+      .question {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+      }
+
+      .answer {
+        color: var(--accent-color);
+        font-weight: 500;
+        border-left: 3px solid var(--accent-color);
+        padding-left: 1rem;
+      }
+
+      .note {
+        font-size: 0.9rem;
+        color: #e53e3e;
+        font-style: italic;
+        margin-top: 0.5rem;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          width: 100%;
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          padding: 1.5rem;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background: var(--accent-color);
+          color: white;
+          padding: 1rem;
+          border-radius: 50%;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+          border: none;
+          z-index: 1000;
+          cursor: pointer;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .mobile-menu-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <h2>SE Prep</h2>
+      <ul class="nav-links">
+        <li><a href="#chapter1">Chapter 1: Introduction</a></li>
+        <li><a href="#chapter2">Chapter 2: Requirements Analysis</a></li>
+        <li><a href="#chapter3">Chapter 3: Design</a></li>
+        <li><a href="#qa">Questions & Answers</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span> Toggle Theme
+      </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- CHAPTER 1 -->
+      <section id="chapter1">
+        <h1>
+          Chapter One: Introduction to Software Engineering Tools and Practices
+        </h1>
+
+        <h3>Course Outcomes - why you are taking this course?</h3>
+        <ul>
+          <li>
+            Become familiar with the practices used by Software Engineers for
+            creating software applications.
+          </li>
+          <li>
+            Become familiar with the various modern tools used by Software
+            Engineers for creating applications.
+          </li>
+          <li>So that you can get a job and work in a team.</li>
+        </ul>
+
+        <h2>What is the Software Life Cycle?</h2>
+        <p>The stages of developing a software application:</p>
+        <div class="diagram-box">
+          <span class="diagram-label">Flow of Software Life Cycle:</span>
+          [Requirements] | v [Design] | v [Implementation] | v [Verification] |
+          v [Maintenance]
+        </div>
+
+        <h2>Software practices vs. Process</h2>
+        <p>
+          <strong>Software Process:</strong> Defines the steps you take to
+          develop good software. E.g., SDLC.
+        </p>
+        <p>
+          <strong>Software Practices:</strong> Specific things you do as part of
+          the process. That is, practices are activities that implement the
+          process.
+        </p>
+
+        <h3>
+          Software development practices that might take place in each phase:
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Practices</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Requirements</td>
+              <td>
+                Stakeholder meeting and interviews, Use case modeling, SRS
+              </td>
+            </tr>
+            <tr>
+              <td>Design</td>
+              <td>
+                Modeling with UML models (class, sequence, activity diagrams),
+                prototyping
+              </td>
+            </tr>
+            <tr>
+              <td>Implementation</td>
+              <td>
+                Convert design into working code, code review, pair programming,
+                version control...
+              </td>
+            </tr>
+            <tr>
+              <td>Verification</td>
+              <td>
+                Verifying that the software works correctly (unit testing,
+                integration, system testing)
+              </td>
+            </tr>
+            <tr>
+              <td>Maintenance</td>
+              <td>
+                Version updates, user feedback analysis, improving existing code
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>What are Software tools?</h2>
+        <ul>
+          <li>
+            Software Engineering Methods are intended to make software
+            engineering more systematic.
+          </li>
+          <li>
+            The computer based tools are Software development environments that
+            are intended to assist the software life cycle processes.
+          </li>
+          <li>
+            Tools are often designed to support particular software engineering
+            methods.
+          </li>
+          <li>
+            Are programs supports different stages of software development.
+          </li>
+        </ul>
+
+        <h3>Software Engineering Tools and Methods</h3>
+        <ul>
+          <li>
+            <strong>Software Engineering tools represent:</strong>
+            <ul>
+              <li>
+                A set of management and technical tools to support software
+                development.
+              </li>
+              <li>Usually integrated in a coherent framework.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Methods:</strong> usually provide techniques and procedures
+            for performing identifiable tasks, and guidelines for checking both
+            the process and the product.
+          </li>
+        </ul>
+
+        <h2>Software Engineering Tools Categories</h2>
+        <ul>
+          <li>Software Requirement Tools</li>
+          <li>Software Design Tools</li>
+          <li>Software Construction Tools</li>
+          <li>Software Testing Tools</li>
+          <li>Software Maintenance Tools</li>
+          <li>Software Configuration Management Tools</li>
+        </ul>
+
+        <h3>Software Requirements Tools</h3>
+        <p>These Tools are classified into two categories:</p>
+        <ol>
+          <li>
+            <strong>Requirements modeling tools:</strong> These tools are used
+            for clarifying, visualizing and analyzing user and system
+            requirements in structured diagram or models. Eg. StarUML (use case,
+            activity, ER models).
+          </li>
+          <li>
+            <strong>Requirement traceability tools:</strong> It helps to track
+            and manage the life of requirements through SDLC. Maintain links
+            between requirements, and their corresponding design, code, and
+            testing cases.
+          </li>
+        </ol>
+      </section>
+
+      <!-- CHAPTER 2 -->
+      <section id="chapter2">
+        <h1>Chapter Two: Requirements Analysis via Use Cases</h1>
+
+        <h2>What is Requirements Analysis?</h2>
+        <p>
+          It is the process of examining, understanding, and refining user's
+          needs and system requirements to ensure they are clear, complete, and
+          feasible before development begins.
+        </p>
+        <p>We perform Requirements Analysis:</p>
+        <ul>
+          <li>
+            To ensure that software requirements are clear, correct, and
+            testable.
+          </li>
+          <li>Help the customer/client determine what the cost will be.</li>
+          <li>Produce a solution that best satisfies the given problem.</li>
+        </ul>
+        <p><em>"Be aware of the guy in the room" - Steve McConnell</em></p>
+
+        <h3>Requirement</h3>
+        <ul>
+          <li>
+            A Requirement is a systematic description of the functions,
+            features, and constraints of a software system.
+          </li>
+          <li>
+            It is a description of what a system should do or how it should
+            perform.
+          </li>
+          <li>When all Requirements are met, your application is complete!</li>
+          <li>
+            Software Quality is determined in part as successful conformance to
+            Requirements.
+          </li>
+        </ul>
+
+        <h2>User Stories</h2>
+        <p>
+          User Stories are a common way of expressing a Requirement of what the
+          system must do.
+        </p>
+        <div class="diagram-box">
+          <span class="diagram-label">User Story Format:</span>
+          "As a [specific type of user], I would like to [achieve some goal] [in
+          order to [justification]]"
+        </div>
+        <p>Examples:</p>
+        <ul>
+          <li>
+            As a Student, I would like to view open courses in order to create a
+            schedule.
+          </li>
+          <li>
+            As a Faculty, I would like to view the students registered for the
+            course sections I am teaching.
+          </li>
+          <li>
+            As the Registrar, I would like to create courses and course
+            sections.
+          </li>
+        </ul>
+        <p>
+          A complete set of User Stories describe everything a system can do.
+          They are however frequently incomplete at the start.
+        </p>
+
+        <h2>UML Review: What is UML and Why we use UML?</h2>
+        <p><strong>UML = Unified Modeling Language.</strong></p>
+        <ul>
+          <li>
+            <strong>Modeling:</strong> Describing a software system at a high
+            level of abstraction. Help acquire an overall view of a system.
+          </li>
+          <li>UML is not dependent on any one language or technology.</li>
+        </ul>
+
+        <h3>UML History</h3>
+        <ul>
+          <li>2003: UML 2.0</li>
+          <li>2001: UML 1.4</li>
+          <li>1999: UML 1.3</li>
+          <li>1997: UML 1.0, 1.1</li>
+          <li>Methods combined: Booch '91/'93, OMT-1/2, Unified Method 0.8.</li>
+        </ul>
+
+        <h3>Types of UML Diagrams</h3>
+        <ul>
+          <li>Use Case Diagram</li>
+          <li>Class Diagram</li>
+          <li>Sequence Diagram</li>
+        </ul>
+        <p><strong>UML diagram tools:</strong> StarUML, ArgoUML.</p>
+
+        <h2>Use-Case Diagrams</h2>
+        <div class="diagram-box">
+          <span class="diagram-label">Structure of Use Case Diagram:</span>
+          [Actor] --(line)-- (Use Case Oval) Boundaries: The system box
+          containing Use Cases. Actors: Stick figures outside the boundary
+          (e.g., Client, Employee, Supervisor). Use Cases: Ovals inside the
+          boundary (e.g., Borrow, Order Title, Fine Remittance).
+        </div>
+
+        <h3>Relationships</h3>
+        <h4>1. Include</h4>
+        <p>
+          Used when a use case always uses another use case's behavior. The
+          included use case is always executed as part of the base use case.
+        </p>
+        <div class="diagram-box">
+          (Create Schedule) --- << include >> ---> (View Open Courses)
+        </div>
+        <p>
+          <em
+            >Every time a student creates a schedule, the system must include
+            the "View Open Courses" functionality.</em
+          >
+        </p>
+
+        <h4>2. Extend</h4>
+        <p>
+          A dotted line labeled <code>&lt;&lt;extend&gt;&gt;</code> with an
+          arrow toward the base case. The extension happens only under certain
+          conditions.
+        </p>
+        <div class="diagram-box">
+          (Check for Schedule Conflicts) --- << extend >> ---> (Create Schedule)
+        </div>
+
+        <h3>Elements of Use Case Diagrams</h3>
+        <ul>
+          <li>
+            <strong>Actor:</strong> An external agent that interacts with the
+            system.
+            <ul>
+              <li>Actors for some systems are just conventional "users".</li>
+              <li>Can be different types (Student, Faculty, Registrar).</li>
+              <li>
+                An Actor does not have to be a person; can be external systems.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Goal:</strong> The specific thing accomplished as a result
+            of executing a Use Case.
+          </li>
+          <li>
+            <strong>Use Case:</strong> An effective technique for narrating how
+            a system works in fulfilling a User Story/Requirement.
+            <ul>
+              <li>
+                Use case names are usually short verb + noun phrases (e.g.,
+                "Create Account").
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2>Scenarios</h2>
+        <p>
+          A Scenario is a narrative that describes what happens within a
+          specific Use Case.
+        </p>
+        <ul>
+          <li>
+            <strong>Main Path (Sunny Day):</strong> Describes what happens in
+            the "normal" case. The Goal is always achieved.
+          </li>
+          <li>
+            <strong>Alternate Scenarios (Rainy Day):</strong> Describe atypical
+            or exceptional situations. Can have different steps, additional
+            steps, or recovery steps.
+          </li>
+        </ul>
+        <p><em>"Plan for things to go wrong!"</em></p>
+
+        <h3>Boundaries, Preconditions, Postconditions</h3>
+        <ul>
+          <li>
+            <strong>Boundaries:</strong> Every Use Case must have a definite
+            Starting and Stopping point.
+          </li>
+          <li>
+            <strong>Precondition:</strong> Conditions that must exist before a
+            Use Case can proceed (e.g., must be logged in).
+          </li>
+          <li>
+            <strong>Postcondition:</strong> Artifacts created or state changes
+            after achieving a goal (e.g., database updated, receipt generated).
+          </li>
+        </ul>
+
+        <h2>Requirement Analysis via Requirement Management Tool (ReqView)</h2>
+        <p>
+          Requirements management tools (RM tools) help remove ambiguity,
+          assumptions, and wishful thinking. The goal is clear, realistic, and
+          agreed-upon requirements.
+        </p>
+
+        <h3>Basic vs. Dedicated Tools</h3>
+        <ul>
+          <li>
+            <strong>Basic:</strong> Spreadsheets (Excel) or Word docs.
+            Problematic because they rely on manual updates, version control is
+            hard, and managing feedback is difficult.
+          </li>
+          <li>
+            <strong>Dedicated (e.g., ReqView):</strong> Help track, test,
+            analyze, visualize, and communicate.
+          </li>
+        </ul>
+
+        <h3>ReqView Features</h3>
+        <ul>
+          <li>Capture structured requirements.</li>
+          <li>Track traceability to design, tests, and risks.</li>
+          <li>User Defined Attributes.</li>
+          <li>History Tracking.</li>
+          <li>Export to HTML, Word, CSV.</li>
+          <li>Import from Word and CSV.</li>
+          <li>Offline Collaboration.</li>
+        </ul>
+      </section>
+
+      <!-- CHAPTER 3 -->
+      <section id="chapter3">
+        <h1>Chapter Three: Design</h1>
+
+        <h2>Outline</h2>
+        <ol>
+          <li>High-level Designs</li>
+          <li>Detail-level Designs</li>
+          <li>Source code generation from UML Models</li>
+          <li>Synchronizing source code with UML models</li>
+        </ol>
+
+        <h2>1. High Level Design (HLD)</h2>
+        <p>
+          Describes how the system is divided into modules, and how those
+          modules interact. Refers to the overall design of a system.
+        </p>
+        <p>
+          Examples: Sequence diagrams (at a high level), Architecture diagrams,
+          Component diagrams, Deployment diagrams.
+        </p>
+
+        <h3>HLDs: Use Case Textual Analysis</h3>
+        <p>
+          Textual Analysis of Use Case scenarios is used to create high-level
+          designs. It is a quick way to make a "first guess" at the classes.
+        </p>
+        <ul>
+          <li>
+            <strong>Nouns</strong> in Use Cases are candidates for
+            <strong>Classes/Objects</strong>.
+          </li>
+          <li>
+            <strong>Verbs</strong> in Use Cases are usually the
+            <strong>Methods</strong> the classes implement.
+          </li>
+        </ul>
+
+        <h4>Object Classifications in Textual Analysis</h4>
+        <ol>
+          <li>
+            <strong>Boundary Objects:</strong> Model the system boundary (User
+            Interface, screens, interfaces to external actors). Actors can only
+            talk to boundary objects.
+          </li>
+          <li>
+            <strong>Control Objects:</strong> Represents a manager that makes
+            decisions (e.g., logic). In simple systems, usually the application
+            itself. Controllers can talk to boundary and entity objects.
+          </li>
+          <li>
+            <strong>Entity Objects:</strong> Data store or persistence element
+            that captures information. Entity objects usually only talk to
+            controllers and boundary objects.
+          </li>
+        </ol>
+
+        <h3>High-Level Sequence Diagrams</h3>
+        <p>
+          Draw a UML HL Sequence Diagram for each Use Case showing interaction
+          between objects.
+        </p>
+        <ul>
+          <li>
+            <strong>Lifelines:</strong> Vertical dashed lines representing the
+            object's life.
+          </li>
+          <li>
+            <strong>Creation:</strong> 'Create' message; object life starts.
+          </li>
+          <li><strong>Activation:</strong> Rectangular stripes on lifeline.</li>
+          <li><strong>Deletion:</strong> 'X' on lifeline.</li>
+        </ul>
+
+        <h2>2. Detailed Design (LLD)</h2>
+        <p>
+          Focuses on the internal design of modules. Describes class structures,
+          methods, relationships, algorithms, and detailed logic. Example: Class
+          diagrams, State diagrams, Activity diagrams.
+        </p>
+
+        <h3>Identifying Classes</h3>
+        <ol>
+          <li>
+            List all objects from Sequence Diagrams (eliminate redundancies).
+          </li>
+          <li>List messages sent to each class (these become methods).</li>
+          <li>Create a list of attributes based on context.</li>
+        </ol>
+
+        <h3>Class Design Principles</h3>
+        <ul>
+          <li>
+            <strong>High Cohesion:</strong> Classes should do one thing well.
+            Independent. Components of a module are directed towards a single
+            task.
+          </li>
+          <li>
+            <strong>Low Coupling:</strong> Modules should be very lightly
+            dependent on each other. Changes internal to one class shouldn't
+            require changes to others.
+          </li>
+        </ul>
+
+        <h3>UML Class Diagrams</h3>
+        <p>
+          Represents classes and their relationships. A rectangle subdivided
+          into three compartments:
+        </p>
+        <div class="diagram-box">
+          ------------------------ | Account | <- Name ------------------------
+          | - balance: double | <- Attributes | + rate: double = 2.5 |
+          ------------------------ | + deposit(): void | <- Operations | +
+          withdraw(): void | ------------------------
+        </div>
+        <p><strong>Visibility Modifiers:</strong></p>
+        <ul>
+          <li><code>+</code> Public</li>
+          <li><code>#</code> Protected</li>
+          <li><code>-</code> Private</li>
+        </ul>
+
+        <h3>Class Relationships</h3>
+        <ul>
+          <li>
+            <strong>Generalization:</strong> Parent/child relationship
+            (Inheritance). E.g., Regular Customer and Loyalty Customer inherit
+            from Customer.
+          </li>
+          <li>
+            <strong>Association:</strong> Relationship between instances. E.g.,
+            Student enrolls in Course. Has role names and multiplicity (1, 0..1,
+            *, 1..*).
+          </li>
+          <li>
+            <strong>Aggregation:</strong> "Whole/Part" relationship. Informal.
+            Container and Containees have no special access privileges. If
+            container is destroyed, parts may survive. (Empty diamond).
+          </li>
+          <li>
+            <strong>Composition:</strong> Stronger "Whole/Part". Every part
+            belongs to only one whole. If whole is deleted, parts are deleted.
+            (Filled diamond). E.g., Chessboard and Squares.
+          </li>
+        </ul>
+
+        <h2>3. Source Code Generation</h2>
+        <p>
+          Generating source code from UML class diagrams. Attributes and methods
+          in the diagram are converted to code stubs.
+        </p>
+
+        <h2>4. Synchronizing Source Code with UML Models</h2>
+        <ul>
+          <li><strong>Forward Engineering:</strong> Model -> Code.</li>
+          <li><strong>Reverse Engineering:</strong> Code -> Model.</li>
+          <li>
+            <strong>Round-trip Engineering:</strong> Synchronizing both. If you
+            change the model, code updates. If you edit code, model updates.
+          </li>
+        </ul>
+      </section>
+
+      <!-- QA SECTION -->
+      <section id="qa" class="qa-section">
+        <h1>Questions & Answers</h1>
+        <p>
+          <em
+            >Note: Answers are derived strictly from the content provided in
+            Chapters 1, 2, and 3. Questions regarding topics outside these PDF
+            chapters (e.g., specific testing principles not mentioned, Hooker's
+            principles, Essence standard) are marked accordingly.</em
+          >
+        </p>
+
+        <div class="qa-card">
+          <p class="question">
+            1. The Pareto principle is NOT applicable to software testing.
+          </p>
+          <p class="answer">
+            False (Implied). <br /><span class="note"
+              >While the Pareto principle is not explicitly defined in the
+              provided text, standard software engineering practice (often
+              discussed alongside testing tools in Chapter 1 context) generally
+              accepts the Pareto principle (80% of errors in 20% of code).
+              However, strictly based on the provided PDF text:
+              <strong>Not found in provided lecture notes.</strong></span
+            >
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            2. Class diagrams in the Modeling tool are considered dynamic
+            structure diagrams that focus on the runtime behavior of objects.
+          </p>
+          <p class="answer">
+            False. <br />Reason: Chapter 3 describes Class Diagrams as giving an
+            overview of a system's <strong>structure</strong> (attributes,
+            operations, relationships). <strong>Sequence diagrams</strong> are
+            described as demonstrating the <strong>behavior</strong> of objects
+            (Chapter 3, Slide 12/18).
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            3. Collaborating with the customer helps build trust and a shared
+            team goal.
+          </p>
+          <p class="answer">
+            True. <br />Reason: Chapter 2 states that Requirements Analysis
+            helps the customer/client determine cost and produce a solution that
+            satisfies the problem. Chapter 1 mentions "So that you can get a job
+            and work in a team." (Implied).
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            8. Generalization in UML refers to the relationship when one class
+            inherits from a superclass.
+          </p>
+          <p class="answer">
+            True. <br />Reason: Chapter 3 explicitly states: "Generalization
+            expresses a parent/child relationship among related classes... Used
+            for abstracting details in several layers" and mentions
+            "Inheritance".
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            1. In the Modeling activity, what is created to better understand
+            the requirements?
+          </p>
+          <p class="answer">
+            A. Product's model <br />Reason: Chapter 2 states "Modeling:
+            Describing a software system at a high level of abstraction. Help
+            acquire an overall view of a system." and "Requirements modeling
+            tools... are used for clarifying, visualizing and analyzing user and
+            system requirements in structured diagram or models."
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            2. What is the main purpose of umbrella activities in software
+            development?
+          </p>
+          <p class="answer">
+            B. To maintain progress, quality, change, and risk <br />Reason:
+            Chapter 1 mentions "Software Configuration Management Tools" and
+            "Software Maintenance Tools" which align with maintaining
+            progress/change. (Note: The specific term "Umbrella activities" is
+            standard SE terminology but not explicitly defined in the provided
+            PDF snippets, but the concept matches the tools described).
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            16. What notation is used by modeling tools to design various UML
+            diagrams?
+          </p>
+          <p class="answer">
+            C. UML notation <br />Reason: Chapter 2 and 3 extensively discuss
+            UML (Unified Modeling Language) for Use Case, Class, and Sequence
+            diagrams.
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            17. How are UML modeling tools integrated within the RAD Studio IDE?
+          </p>
+          <p class="answer">
+            Answer not found in provided lecture notes. <br /><span class="note"
+              >The PDFs mention StarUML, ArgoUML, and ReqView, and "JavaScript
+              Class Creator", but do not mention RAD Studio IDE.</span
+            >
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            18. What does synchronization between models and source code ensure
+            in software development?
+          </p>
+          <p class="answer">
+            B. It keeps software design models (like UML diagrams) and the
+            source code consistent with each other. <br />Reason: Chapter 3
+            states: "Synchronizing source code with UML models means: keeping
+            your UML diagrams... and your actual program code up to date with
+            each other."
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            20. What is one of the key benefits of using SCM for source code
+            management?
+          </p>
+          <p class="answer">
+            B. It helps track and compare different versions of the source code.
+            <br />Reason: Chapter 1 lists "Software Configuration Management
+            Tools". While the specific text "track and compare" isn't in the
+            short bullets, Chapter 3's section on synchronization and
+            "Round-trip engineering" implies version/change management. Standard
+            definition of SCM in SE aligns with B.
+          </p>
+        </div>
+
+        <div class="qa-card">
+          <p class="question">
+            Questions regarding Essence, David Hooker, W5HH, George Polya:
+          </p>
+          <p class="answer">
+            Not found in provided lecture notes. <br /><span class="note"
+              >These specific names and frameworks are not present in the text
+              of Chapters 1, 2, or 3 provided.</span
+            >
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Theme Toggle
+      function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("theme-icon");
+
+        if (body.getAttribute("data-theme") === "dark") {
+          body.removeAttribute("data-theme");
+          icon.textContent = "🌙";
+        } else {
+          body.setAttribute("data-theme", "dark");
+          icon.textContent = "☀️";
+        }
+      }
+
+      // Mobile Sidebar Toggle
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("active");
+      }
+
+      // Smooth Scroll for Anchors
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+          // Close sidebar on mobile after click
+          document.getElementById("sidebar").classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
