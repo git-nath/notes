@@ -376,6 +376,58 @@
         margin-top: 0.5rem;
       }
 
+      /* Panel toggle button */
+      .panel-toggle {
+        position: fixed;
+        top: 16px;
+        right: 110px; /* between badge and minimap */
+        z-index: 2100;
+        background: var(--accent-color);
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+        transition: transform 0.15s, opacity 0.15s;
+      }
+      .panel-toggle:hover {
+        transform: translateY(-1px);
+      }
+
+      /* Collapsed panels state on body */
+      body.panels-collapsed .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        pointer-events: none;
+      }
+
+      /* Hide minimap when collapsed */
+      body.panels-collapsed .minimap-container {
+        display: none;
+      }
+
+      /* Expand main content when panels hidden */
+      body.panels-collapsed .main-content {
+        margin-left: 0;
+        padding-right: 3rem;
+        max-width: 100%;
+        transition: margin 0.25s ease, max-width 0.25s ease;
+      }
+
+      /* Adjust progress badge position when minimap hidden by JS state */
+      body.panels-collapsed .progress-badge {
+        right: 30px;
+      }
+
+      @media (max-width: 1024px) {
+        /* keep button hidden on small devices where sidebar already collapses */
+        .panel-toggle {
+          display: none;
+        }
+      }
+
       /* Mobile Responsiveness */
       @media (max-width: 1024px) {
         .minimap-container {
@@ -434,6 +486,16 @@
       <div class="progress-bar" id="myBar"></div>
     </div>
     <div class="progress-badge" id="progressBadge">Ready</div>
+
+    <!-- Panels Toggle Button -->
+    <button
+      id="panelToggleBtn"
+      class="panel-toggle"
+      aria-pressed="false"
+      title="Hide sidebar and minimap"
+    >
+      Hide Panels
+    </button>
 
     <!-- Mobile Menu Button -->
     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
@@ -1226,6 +1288,28 @@
           icon.textContent = "☀️";
         }
       }
+
+      // Panels toggle (hide/show sidebar + minimap)
+      (function () {
+        const btn = document.getElementById("panelToggleBtn");
+        const body = document.body;
+
+        if (!btn) return;
+
+        function updateButton() {
+          const collapsed = body.classList.contains("panels-collapsed");
+          btn.setAttribute("aria-pressed", collapsed ? "true" : "false");
+          btn.textContent = collapsed ? "Show Panels" : "Hide Panels";
+        }
+
+        btn.addEventListener("click", () => {
+          body.classList.toggle("panels-collapsed");
+          updateButton();
+        });
+
+        // Initialize label based on initial state
+        updateButton();
+      })();
 
       // Mobile Sidebar Toggle
       function toggleSidebar() {
