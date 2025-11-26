@@ -455,29 +455,53 @@
     <!-- Minimap Container - NEW -->
     <div class="minimap-container">
       <div class="minimap-title">Document Minimap</div>
-      <div class="minimap-chapter" data-target="#chapter1">
-        <span onclick="scrollToSection('#chapter1')">Chapter 1</span>
+      <div
+        class="minimap-chapter"
+        data-target="#chapter1"
+        tabindex="0"
+        role="button"
+        aria-label="Go to Chapter 1"
+      >
+        <span>Chapter 1</span>
         <div
           class="minimap-progress-indicator"
           id="minimap-chapter1-progress"
         ></div>
       </div>
-      <div class="minimap-chapter" data-target="#chapter2">
-        <span onclick="scrollToSection('#chapter2')">Chapter 2</span>
+      <div
+        class="minimap-chapter"
+        data-target="#chapter2"
+        tabindex="0"
+        role="button"
+        aria-label="Go to Chapter 2"
+      >
+        <span>Chapter 2</span>
         <div
           class="minimap-progress-indicator"
           id="minimap-chapter2-progress"
         ></div>
       </div>
-      <div class="minimap-chapter" data-target="#chapter3">
-        <span onclick="scrollToSection('#chapter3')">Chapter 3</span>
+      <div
+        class="minimap-chapter"
+        data-target="#chapter3"
+        tabindex="0"
+        role="button"
+        aria-label="Go to Chapter 3"
+      >
+        <span>Chapter 3</span>
         <div
           class="minimap-progress-indicator"
           id="minimap-chapter3-progress"
         ></div>
       </div>
-      <div class="minimap-chapter" data-target="#qa">
-        <span onclick="scrollToSection('#qa')">Q&A</span>
+      <div
+        class="minimap-chapter"
+        data-target="#qa"
+        tabindex="0"
+        role="button"
+        aria-label="Go to Questions and Answers"
+      >
+        <span>Q&A</span>
         <div class="minimap-progress-indicator" id="minimap-qa-progress"></div>
       </div>
     </div>
@@ -1220,6 +1244,23 @@
       window.addEventListener("resize", updateProgress);
 
       const minimapChapters = document.querySelectorAll(".minimap-chapter");
+
+      // Make entire minimap block clickable and keyboard-activatable
+      minimapChapters.forEach((chapterBlock) => {
+        chapterBlock.addEventListener("click", () => {
+          const target = chapterBlock.getAttribute("data-target");
+          if (target) scrollToSection(target);
+        });
+
+        chapterBlock.addEventListener("keydown", (e) => {
+          // Activate on Enter or Space
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            const target = chapterBlock.getAttribute("data-target");
+            if (target) scrollToSection(target);
+          }
+        });
+      });
 
       function updateProgress() {
         const sections = document.querySelectorAll("section");
